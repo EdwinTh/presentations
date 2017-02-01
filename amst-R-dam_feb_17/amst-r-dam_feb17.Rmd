@@ -1,0 +1,94 @@
+---
+title: "Preparing datetime data with *padr*"
+subtitle: "amst-R-dam"
+author: "Edwin Thoen - Rabobank"
+date: "23 Feb 2017"
+output: ioslides_presentation
+---
+
+## Automatically generated data
+
+```{r, out.width="700px", echo=FALSE}
+knitr::include_graphics("./slide1.png")
+```
+
+## With this data we might like to:
+
+* Look for trends over time
+
+```{r, echo=FALSE, message=FALSE, cache=TRUE}
+library(*padr*); library(dplyr); library(ggplot2)
+emergency %>% filter(title == 'EMS: DEHYDRATION') %>% 
+  thicken(interval = 'day') %>% count(time_stamp_day) %>% pad %>% 
+  fill_by_value(n) %>% 
+  ggplot(aes(time_stamp_day, n)) +
+  geom_point() +
+  geom_smooth() +
+  xlab("") +
+  ylab("")
+```
+
+## With this data we might like to:
+
+* Compare different moments in time
+
+```{r, echo=FALSE, message=FALSE, cache=TRUE}
+library(padr); library(dplyr); library(ggplot2)
+emergency %>% filter(title == 'Traffic: VEHICLE ACCIDENT -') %>% 
+  thicken(interval = 'hour') %>% count(time_stamp_hour) %>% pad %>% 
+  fill_by_value(n) %>% 
+  mutate(hour_of_day = lubridate::hour(time_stamp_hour)) %>% 
+  ggplot(aes(hour_of_day %>% factor, n)) +
+  geom_boxplot(fill = 'cornflowerblue') +
+  xlab("Hour of the day") +
+  ylab("")
+```
+
+## With this data we might like to:
+
+Do other time series analysis
+* Compare seasonality
+* Fit ARIMA models
+
+But also
+* Difference between median 
+
+
+
+## However our data looks like this
+
+```{r, message=FALSE}
+library(padr)
+library(dplyr)
+padr::emergency %>% head
+```
+
+
+## *padr* helps out with two challenges
+
+Every row is a single observation, typically on second level. You want to do analysis on a (much) higher level.
+
+* *padr* offers: **thicken** used in conjunction with a database package, like *dplyr*.
+
+```{r}
+emergency %>% thicken(interval = "month") %>% 
+  count(time_stamp_month) %>% head
+```
+
+## *padr* helps out with two challenges
+
+When there is no observation, there is no record.
+
+* *padr* offers: **pad**
+
+```{r}
+data.frame(dt    = as.Date(c("2017-02-23", "2017-02-26")), 
+           value = c(2, 4)) %>% 
+  pad
+```
+
+
+## The *interval*
+
+
+
