@@ -51,7 +51,6 @@ Do other time series analysis
 * Look for seasonality
 * Fit ARIMA models
 * Calculate a moving average
-* Do forecasting
 
 But also other types of analysis involve processing timestamp data.
 
@@ -83,8 +82,7 @@ When there is no observation, there is no record.
 
 ```{r}
 data.frame(dt  = as.Date(c("2017-02-23", "2017-02-26")), 
-           val = c(2, 4)) %>% 
-  pad
+           val = c(2, 4)) %>% pad
 ```
 
 
@@ -148,7 +146,7 @@ The `pad` function takes in a data frame, then it does:
 
 * look for the datetime variable in the data frame.
 * assess the interval of this variable.
-* span a variable of the **same** interval around it.
+* span a variable of the *same* interval around it.
 * merge the original variable with the spanned variable.
 * leave `NA` values for the other variables.
 
@@ -194,7 +192,8 @@ After padding you are left with the missing values for the imputed records.
 
 ```{r}
 padded_df <- 
-  data.frame(dt  = as.Date(c("2017-02-23", "2017-02-25", "2017-02-27")), 
+  data.frame(dt  = as.Date(c("2017-02-23", "2017-02-25", 
+                             "2017-02-27")), 
            val = c(2, 4, 2)) %>% pad
 
 padded_df
@@ -253,7 +252,7 @@ animal_bites_plot <-
   filter(title == 'EMS: ANIMAL BITE') %>% 
   thicken(interval = 'day', col = 'ts_day') %>% 
   count(ts_day) %>% 
-  pad %>% 
+  pad() %>% 
   fill_by_value(n) %>% 
   ggplot(aes(ts_day, n)) +
   geom_point() +
@@ -285,7 +284,7 @@ There are two vignettes, a general introduction and more details on the implemen
 
 ```{r, eval=FALSE}
 vignette("padr")
-vignette("padr_implementation")seq(as.Date('2017-02-23', by = "3 days", length.out = 4))
+vignette("padr_implementation")
 ```
 
 
