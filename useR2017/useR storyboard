@@ -1,0 +1,33 @@
+Presentatie useR 2017 - 15 slides 20 sec per slide
+
+Medium: Keynote met screenshots uit R
+
+Slide 1 - Algemene Intro: naam - functie - gelegenheid - pakketnaam
+
+Slide 2 - Intro van probleem, slide met de vier databronnen uit amst-R-dam
+
+Slide 3 - Voorbeeld van een plot die we zouden willen maken van deze data
+
+Slide 4 - Voorbeelddataset, dump in R van de data. Aantal regels ongeveer 10
+
+Slide 5 - De problemen die pad en thicken voor je op zouden kunnen lossen
+
+Slide 6 - Introductie van het interval in padr
+
+Slide 7 - Voorbeelden van get_interval op verschillend reeks zoals slide amst-R-dam
+
+Slide 8 - thicken 1: doel van de functie
+
+Slide 9 - voorbeeld van thicken
+
+Slide 10 - pad: doel van de functie
+
+Slide 11 - pad: plaatje van het spannen van pad
+
+Slide 12 - fill_by_
+
+Slide 13 - fill_by_ voorbeelden
+
+Slide 14 - Code om deze plot te maken met thicken, pad en dplyr
+
+Slide 15 - Contactgegevens met email, github, vignettes, blog en twitter. 

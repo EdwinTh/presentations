@@ -1,0 +1,92 @@
+---
+title: "useR2017"
+author: "Edwin Thoen"
+date: "5/26/2017"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, echo = FALSE}
+library(tidyverse)
+library(padr)
+towns <- emergency %>%
+  filter(title == "Traffic: VEHICLE ACCIDENT -") %>% count(twp) %>% arrange(n %>% desc) %>% head(4)
+
+one_week_of_traffic <- emergency %>%
+  filter(title == "Traffic: VEHICLE ACCIDENT -") %>%
+  thicken("week", "w") %>%
+  filter(w == as.Date("2016-07-10")) %>%
+  filter(twp %in% towns$twp) %>%
+  select(title, time_stamp, twp)
+```
+
+## Slide 3
+```{r, echo = FALSE, message=FALSE}
+mapping <- c("Night", "Morning", "Afternoon", "Evening")
+names(mapping) <- c(0, 6, 12, 18)
+one_week_of_traffic %>%
+  thicken("6 hour", "h6") %>%
+  count(twp, h6) %>%
+  mutate(n = as.integer(n)) %>% 
+  pad(start_val = as.POSIXct("2016-07-10 00:00:00")) %>%
+  fill_by_value() %>%
+  mutate(hr = lubridate::hour(h6)) %>% 
+  mutate(daypart = mapping[as.character(hr)] %>% 
+           forcats::fct_relevel(mapping)) %>% 
+  ggplot(aes(h6, n)) +
+  geom_line() +
+  geom_point(aes(col = daypart)) +
+  facet_wrap(~twp) +
+  ggtitle("Number of traffice accidents in four neighbourhoods") +
+  xlab("") + ylab("")
+```
+
+## Slide 4
+
+```{r}
+head(one_week_of_traffic) 
+```
+
+## Slide 7
+
+```{r}
+get_interval(one_week_of_traffic$time_stamp)
+
+get_interval(as.Date(c("2017-07-01", "2017-07-03", "2017-07-07")))
+```
+
+## Slide 9
+
+```{r}
+one_week_of_traffic %>% 
+  thicken("6 hour") %>% 
+  count(twp, time_stamp_6_hour)
+```
+
+## Slide 11
+```{r}
+one_week_of_traffic %>% 
+  thicken("6 hour") %>% 
+  count(twp, time_stamp_6_hour) %>%
+  pad()
+```
+
+## Slide 13
+
+```{r}
+one_week_of_traffic %>% 
+  thicken("6 hour") %>% 
+  count(twp, time_stamp_6_hour) %>%
+  pad() %>% 
+  fill_by_value()
+```
+
+
+## Slide 14
+```{r, eval=FALSE, message=FALSE}
+
+```
+
