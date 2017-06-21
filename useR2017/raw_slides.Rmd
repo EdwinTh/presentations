@@ -47,16 +47,23 @@ one_week_of_traffic %>%
 ## Slide 4
 
 ```{r}
-head(one_week_of_traffic) 
+head(one_week_of_traffic, 10) 
 ```
 
 ## Slide 7
 
 ```{r}
 get_interval(one_week_of_traffic$time_stamp)
+```
 
+```{r}
 get_interval(as.Date(c("2017-07-01", "2017-07-03", "2017-07-07")))
 ```
+
+```{r}
+get_interval(as.Date(c("2017-07-01", "2017-07-03", "2017-07-06")))
+```
+
 
 ## Slide 9
 
