@@ -78,7 +78,7 @@ one_week_of_traffic %>%
 one_week_of_traffic %>% 
   thicken("6 hour") %>% 
   count(twp, time_stamp_6_hour) %>%
-  pad()
+  pad(group = "twp")
 ```
 
 ## Slide 13
@@ -87,7 +87,7 @@ one_week_of_traffic %>%
 one_week_of_traffic %>% 
   thicken("6 hour") %>% 
   count(twp, time_stamp_6_hour) %>%
-  pad() %>% 
+  pad(group = "twp") %>% 
   fill_by_value()
 ```
 
