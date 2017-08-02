@@ -27,11 +27,12 @@ one_week_of_traffic <- emergency %>%
 ```{r, echo = FALSE, message=FALSE}
 mapping <- c("Night", "Morning", "Afternoon", "Evening")
 names(mapping) <- c(0, 6, 12, 18)
-one_week_of_traffic %>%
+slide3_plot <- one_week_of_traffic %>%
   thicken("6 hour", "h6") %>%
   count(twp, h6) %>%
   mutate(n = as.integer(n)) %>% 
-  pad(start_val = as.POSIXct("2016-07-10 00:00:00")) %>%
+  pad(start_val = as.POSIXct("2016-07-10 00:00:00"),
+      end_val   = as.POSIXct("2016-07-16 18:00:00")) %>%
   fill_by_value() %>%
   mutate(hr = lubridate::hour(h6)) %>% 
   mutate(daypart = mapping[as.character(hr)] %>% 
@@ -40,8 +41,12 @@ one_week_of_traffic %>%
   geom_line() +
   geom_point(aes(col = daypart)) +
   facet_wrap(~twp) +
-  ggtitle("Number of traffice accidents in four neighbourhoods") +
+  ggtitle("Number of traffic accidents in four neighbourhoods") +
   xlab("") + ylab("")
+
+jpeg("/Users/edwinthoen/Desktop/slide3.jpg", height = 700, width = 1000)
+slide3_plot
+dev.off()
 ```
 
 ## Slide 4
