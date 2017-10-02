@@ -1,0 +1,119 @@
+---
+title: "Bayesian Data Analysis Session 1"
+author: "Edwin Thoen"
+date: "10/2/2017"
+output: 
+  beamer_presentation
+---
+
+## Overview
+
+**Session 1: Edwin**
+
+What is Bayesian statistics? Theory and simple examples.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+```
+
+
+**Session 2: Rick**
+
+Building hierarchical models with Stan.
+
+# Introduction
+
+## Intuition of Bayesian Statistics
+
+Statistics describes the world in probality distributions. 
+
+Collect data to learn about the distributions: $\hat\theta$
+
+Reverse engineering of parameters producing the data.
+
+How do we deal with uncertainty?
+
+A Bayesian:
+
+- Sets a probabilty distribution on all $\theta$.
+- Updates his beliefs with data.
+
+## Set a prior: $P(\theta)$
+
+```{r, echo = FALSE}
+plot_data <- data_frame(theta = seq(0, 1, by = .001),
+                        prior = dbeta(theta, 4, 4),
+                        likelihood = theta^15 * (1-theta)^5,
+                        posterior  = dbeta(theta, 18, 8))
+settings <- function(gg_obj){
+  gg_obj + geom_line() + 
+  theme(axis.text.y  = element_blank(),
+        axis.ticks.y = element_blank()) +
+  ylab("")
+}
+ggplot(plot_data, aes(theta, prior)) %>% settings()
+```
+
+## Get the likelihood function: $P(D|\theta)$
+
+```{r, echo = FALSE}
+ggplot(plot_data, aes(theta, likelihood)) %>% settings()
+```
+
+## Update prior to posterior with likelihood: $P(\theta|D)$
+
+```{r, echo=FALSE}
+plot_data %>% select(-likelihood) %>% 
+  gather(key = distribution, value = dens, -theta) %>% 
+  ggplot(aes(theta, dens, col = distribution)) %>% settings()
+```
+
+Likelihood not in this plot, on different scale (why?).
+
+## Bayesian data analysis
+
+The essence of BDA is **credibility (re)allocation**.
+
+We have an a priori idea about $\theta$:
+  
+- expert opinion
+- previous research
+- educated guess
+
+Data provides evidence of the parameter value.
+
+The posterior is a compromise between prior and likelihood. It reflects the current knowledge.
+
+## Bayesian vs frequentist
+
+- Frequentist only consider the likelihood.
+
+- Frequentits have an objective view of probability. For Bayesians it is a subjective best guess.
+
+- Frequentists: data random, parameters fixed. Bayesians: data fixed, parameters random.
+
+## Why do we want BDA in the first place?
+
+- Elegant and intuitive paradigm.
+
+- Incorparation of previous knowledge and allowing for updating.
+
+- Describe complex relationships without huge amounts of data.
+
+# Probability
+
+## Considered known
+
+- sample space $\Omega$.
+
+- probability functions.
+
+- discrete and continuous random variables.
+
+- expected value and variance of random variables.
+
+- from probability distribution to likelihood.
+
+## Probability of multiple events
+
+

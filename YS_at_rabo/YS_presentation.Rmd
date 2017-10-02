@@ -1,0 +1,69 @@
+---
+title: 'A day in the life of a statistician turned data scientist at Rabobank'
+author: "Edwin Thoen"
+date: "30 May 2016"
+runtime: shiny
+output: ioslides_presentation
+---
+
+## Hi guys
+<img src="afstuderen.jpg" alt="Drawing" style="width: 700px;"/>
+
+## Data science, statistics how do they relate?
+"The fact that data science exists as a field is a colossal failure of statistics" - **Hadley Wickham**
+
+"I do think it would be fair to consider statistics (...) as a subset of data science" - **Andrew Gelman**
+
+"A data scientist is a statistician who lives in San Francisco" - **quote on Twitter**
+
+## What is data science?
+<img src="data_science.jpg" alt="Drawing" style="width: 800px;"/>
+
+## Skills vs Company type
+<img src="udacity.jpg" alt="Drawing" style="width: 575px;"/>
+
+## Rabobank Data Scientist
+<img src="udacity2.jpg" alt="Drawing" style="width: 575px;"/>
+
+## What do we have covered?
+<img src="udacity3.jpg" alt="Drawing" style="width: 575px;"/>
+
+## <span style="color:blue">Basic Skills to work with data</span>
+<img src="basics.jpg" alt="Drawing" style="width: 800px;"/>
+
+## <span style="color:red">Software Engineering</span>
+Programming is just one skill needed for software engineering.
+
+Statisticians mostly code for analysis, maybe implementing some new methods.
+
+Software implementation usually done by others.
+
+Statisticians can still learn a lot from software enginering, like unit testing and profiling.
+
+## <span style="color:green">Statistics</span>
+<img src="thumbs_up.jpg" alt="Drawing" style="width: 600px;"/>
+
+## <span style="color:blue">Machine Learning</span>
+<img src="csn.jpg" alt="Drawing" style="width: 800px;"/>
+
+## <span style="color:red">Data Munging</span>
+<img src="regex.jpg" alt="Drawing" style="width: 700px;"/>
+
+## <span style="color:red">Data Munging</span>
+Not only cleaning dirty data, also deal with numerous file types and data base types.
+<img src="munging2.jpg" alt="Drawing" style="width: 800px;"/>
+
+## <span style="color:blue">Visualization and Communication</span>
+<img src="dont_understand.jpg" alt="Drawing" style="width: 800px;"/>
+
+## <span style="color:blue">Visualization and Communication</span>
+<img src="viz.jpg" alt="Drawing" style="width: 800px;"/>
+
+## <span style="color:blue">Thinking Like a Data Scientist</span>
+Applying the scientific method to business problems.
+
+Create business value, even when there's not a big challenge for you.
+
+Recognize opportunities, push solutions.
+
+Want to make a difference, cause action.

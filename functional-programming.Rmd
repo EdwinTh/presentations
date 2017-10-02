@@ -1,0 +1,90 @@
+---
+title: "Functional programming in Data Science"
+author: "Edwin Thoen"
+date: "9/21/2017"
+output: ioslides_presentation
+---
+---
+title: "Functional Programming"
+author: "Edwin"
+date: "9/20/2017"
+output: ioslides_presentation
+---
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+set.seed(12345)
+x <- data.frame(x1 = c(round(rnorm(3, 10, 2), 1), "NULL"),
+                x2 = c(NA, round(runif(3, -10, 10), 1)),
+                x3 = c(round(runif(3, -10, 10), 1), "NULL"),
+                x4 = c(13.1, "null", 14.1, 8.3),
+                stringsAsFactors = FALSE)
+x_original <- x
+```
+
+## Intro
+
+We have a dataset with three columns
+
+```{r}
+x
+```
+
+Columns `x1` and `x3` have a *NULL* or *null*. We need to fix this.
+
+## Intro
+
+Someone who just uses R or python would fix this maybe like
+
+```{r}
+x$x1[4] <- NA 
+x$x3[4] <- NA 
+x$x4[2] <- NA
+```
+
+## Intro
+
+Someone who just uses R or python would fix this maybe like
+
+```{r}
+x$x1[4] <- NA 
+x$x3[4] <- NA 
+x$x4[2] <- NA
+```
+
+Then you realise that the three columns are strings because of the non-standard values.
+
+```{r}
+x$x1 <- as.numeric(x$x1)
+x$x3 <- as.numeric(x$x3)
+x$x4 <- as.numeric(x$x4)
+```
+There, fixed it!
+
+## Intro
+
+Downsides of fixing in place?
+
+## Intro
+
+Downsides of fixing in place?
+
+> - **Not Scalable**
+
+    Needs a new line of code for each new occurence. Infeasible for many occurences.
+    
+> - **Error Prone**
+
+    Depends on the position of the character. Copy-paste errors.
+
+```{r}
+x$x3 <- as.numeric(x4)
+```
+
+> - **Code Overfit**
+
+    Only works for this particular data set. Often we have renewal of data.
+    
+> - **
+
+
