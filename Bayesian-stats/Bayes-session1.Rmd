@@ -14,6 +14,9 @@ What is Bayesian statistics? Theory and simple examples.
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 library(tidyverse)
+#devtools::install_github("edwinth/tennis")
+library(tennis)
+source("ggmm.R")
 ```
 
 
@@ -116,4 +119,40 @@ The posterior is a compromise between prior and likelihood. It reflects the curr
 
 ## Probability of multiple events
 
+```{r, echo = FALSE}
+rr <- atp_matches %>% 
+  find_matchup(c("Roger Federer", "Rafael Nadal")) %>% 
+  mutate(winner_name = strsplit(winner_name, " ") %>% map_chr(2))
+
+ggmm(rr, surface, winner_name)
+```
+
+## Joints, marginals and conditionals
+
+(We assume the probabilities here as given, not as estimated.)
+
+The joint is the probability two events coincide. $P(A = a \cap B = b)$ or for brevity $P(A \cap B)$
+
+```{r, echo=FALSE}
+joint <- rr %>% select(winner_name, surface) %>%
+  table %>% prop.table() %>% round(3) %>% as.data.frame() %>% 
+  spread(surface, Freq)
+  
+knitr::kable(joint)
+```
+
+## Joints, marginals and conditionals
+
+The marginals are the univariate distributions of A and B. Sum over the other (or integrate them out when continuous).
+
+```{r, echo = FALSE}
+knitr::kable(joint[2:4] %>% colSums())
+players <- joint[2:4] %>% rowSums()
+names(players) <- c("Federer", "Nadal")
+knitr::kable(players)
+```
+
+## Joints, marginals and conditionals
+
+Conditionals, like $P(A|B)$, redefine $\Omega$, it is now a subset of the joint.
 
