@@ -14,8 +14,26 @@ What is Bayesian statistics? Theory and simple examples.
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 library(tidyverse)
-#devtools::install_github("edwinth/tennis")
+# devtools::install_github("edwinth/tennis")
 library(tennis)
+name_to_last_name <- function(df, col) {
+  col_q <- enquo(col)
+  df %>% 
+    mutate(!!rlang::quo_name(col_q) := 
+             strsplit(!!col_q, " ") %>% map_chr(2))
+}
+rr <- tennis::atp_matches %>% 
+  tennis::find_matchup(c("Roger Federer", "Rafael Nadal")) %>% 
+  name_to_last_name(winner_name) %>% 
+  name_to_last_name(loser_name)
+
+ace_set <- atp_matches %>% 
+  find_player("Roger Federer", "Rafael Nadal", "Novak Djokovic", "Ivo Karlovic", "John Isner") %>% 
+  name_to_last_name(winner_name) %>% 
+  name_to_last_name(loser_name) 
+  
+# write_csv(rr, "./rr.csv")
+rr <- read_csv("./rr.csv")
 source("ggmm.R")
 ```
 
@@ -120,10 +138,6 @@ The posterior is a compromise between prior and likelihood. It reflects the curr
 ## Probability of multiple events
 
 ```{r, echo = FALSE}
-rr <- atp_matches %>% 
-  find_matchup(c("Roger Federer", "Rafael Nadal")) %>% 
-  mutate(winner_name = strsplit(winner_name, " ") %>% map_chr(2))
-
 ggmm(rr, surface, winner_name)
 ```
 
@@ -155,4 +169,59 @@ knitr::kable(players)
 ## Joints, marginals and conditionals
 
 Conditionals, like $P(A|B)$, redefine $\Omega$, it is now a subset of the joint.
+
+```{r, echo = FALSE}
+ggmm(rr, surface, winner_name, surface == "Clay")
+```
+
+## Joints, marginals and conditionals
+
+For $P(B|A)$ this looks 
+
+```{r, echo = FALSE}
+ggmm(rr, surface, winner_name, player == "Nadal")
+```
+
+## Joints, marginals and conditionals
+
+With a continuous and discrete variable, a way to graph the data is
+
+```{r, echo = FALSE, message=FALSE}
+player_ace <- function(df, name) {
+  df %>% 
+    mutate(ace    = case_when(winner_name == name ~ w_ace, 
+                              loser_name  == name ~ l_ace,
+                              TRUE ~ NA_character_),
+           player = name) %>% 
+    select(player, ace) %>% 
+    filter(!is.na(ace))
+}
+
+aces_set <- c("Nadal", "Federer", "Djokovic", "Isner", "Karlovic") %>% 
+  map_df(player_ace, df = ace_set) %>%
+  mutate(ace = as.integer(ace))
+
+ggplot(aces_set, aes(ace)) +
+  geom_histogram(aes(fill = player), binwidth = 1, col = "black") +
+  xlim(c(-1, 45)) +
+  ggtitle("Aces per match, for five players")
+```
+## Marginal for players
+
+What does the marginal for the players look like?
+
+```{r, echo = FALSE}
+ggplot(aces_set, aes(player)) +
+  geom_bar()
+```
+
+
+
+
+```{r}
+ggplot(aces_set, aes(ace, player)) +
+  ggridges::geom_density_ridges(aes(fill = player)) +
+  guides(fill = FALSE) +
+  xlim(c(-1, 45))
+```
 
